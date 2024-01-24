@@ -103,11 +103,11 @@ export default async function handler(
             // 提取书签文本并创建ID数组
             const errors = await fetchDescriptions(bookmarks);
             
-            const outputData = {
-                bookmarks: bookmarks,
-                errors: errors
-            };
-            fs.writeFileSync('output.txt', JSON.stringify(outputData, null, 2));
+            // const outputData = {
+            //     bookmarks: bookmarks,
+            //     errors: errors
+            // };
+            // fs.writeFileSync('output.txt', JSON.stringify(outputData, null, 2));
             // console.log(bookmarks);
             // 使用vectorStore将书签添加到documents
             const texts = bookmarks.map(bookmark => `${bookmark.title}`+`  ${bookmark.description}`);
