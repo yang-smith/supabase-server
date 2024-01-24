@@ -52,7 +52,7 @@ async function fetchDescription(url, errors) {
         return null;
     }
 }
-async function fetchDescriptions(bookmarks, batchSize = 25) {
+async function fetchDescriptions(bookmarks, batchSize = 10) {
     let processed = 0;
     const errors = [];
     const processBatch = async (batch) => {
