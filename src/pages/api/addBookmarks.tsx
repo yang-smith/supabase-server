@@ -3,10 +3,7 @@ import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs';
 
-type CommonError = {
-    message: string;
-    code: string;
-};
+
 
 async function fetchDescription(url, errors) {
     // GitHub URL
@@ -69,7 +66,7 @@ async function fetchDescriptions(bookmarks, batchSize = 10) {
     while (processed < bookmarks.length) {
         const batch = bookmarks.slice(processed, processed + batchSize);
         await processBatch(batch);
-        return errors;
+        // return errors;
     }
 
     return errors;
@@ -101,7 +98,7 @@ export default async function handler(
             const client = createClient(url, privateKey);
             const embeddings = new OpenAIEmbeddings();
             // 提取书签文本并创建ID数组
-            const errors = await fetchDescriptions(bookmarks);
+            // const errors = await fetchDescriptions(bookmarks);
             
             // const outputData = {
             //     bookmarks: bookmarks,
@@ -110,7 +107,8 @@ export default async function handler(
             // fs.writeFileSync('output.txt', JSON.stringify(outputData, null, 2));
             // console.log(bookmarks);
             // 使用vectorStore将书签添加到documents
-            const texts = bookmarks.map(bookmark => `${bookmark.title}`+`  ${bookmark.description}`);
+            // const texts = bookmarks.map(bookmark => `${bookmark.title}`+`  ${bookmark.description}`);
+            const texts = bookmarks.map(bookmark => `${bookmark.title}`);
             const urls = bookmarks.map(bookmark => ({ url: bookmark.url }));
             console.log(texts);
             const vectorStore = await SupabaseVectorStore.fromTexts(
