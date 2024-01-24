@@ -69,6 +69,7 @@ async function fetchDescriptions(bookmarks, batchSize = 25) {
     while (processed < bookmarks.length) {
         const batch = bookmarks.slice(processed, processed + batchSize);
         await processBatch(batch);
+        return errors;
     }
 
     return errors;
@@ -118,8 +119,8 @@ export default async function handler(
                 embeddings,
                 {
                     client,
-                    tableName: 'bookmarks',
-                    queryName: 'match_bookmarks',
+                    tableName: 'documents',
+                    queryName: 'match_documents',
                 }
             );
 
