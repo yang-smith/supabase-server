@@ -107,10 +107,10 @@ export default async function handler(
             // fs.writeFileSync('output.txt', JSON.stringify(outputData, null, 2));
             // console.log(bookmarks);
             // 使用vectorStore将书签添加到documents
-            // const texts = bookmarks.map(bookmark => `${bookmark.title}`+`  ${bookmark.description}`);
-            const texts = bookmarks.map(bookmark => `${bookmark.title}`);
+            const texts = bookmarks.map(bookmark => `${bookmark.title}`+`  ${bookmark.description}`);
+            // const texts = bookmarks.map(bookmark => `${bookmark.title}`);
             const urls = bookmarks.map(bookmark => ({ url: bookmark.url }));
-            console.log(texts);
+            // console.log(texts);
             const vectorStore = await SupabaseVectorStore.fromTexts(
                 texts,
                 urls,
