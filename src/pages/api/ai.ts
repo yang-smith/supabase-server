@@ -1,5 +1,5 @@
 import { ChatOpenAI } from "@langchain/openai";
-import {Prompt} from"@/pages/lib/prompt";
+import {Prompt} from"@/lib/prompt";
 
 export default async function handler(
     req,
