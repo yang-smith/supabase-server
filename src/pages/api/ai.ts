@@ -7,10 +7,9 @@ export default async function handler(
 ) {
     if (req.method === 'POST') {
         const { query, contents } = req.body;
-        console.log(query);
-        console.log(contents);
         const chatModel = new ChatOpenAI({});
         const prompt = Prompt(query, contents);
+        console.log(prompt);
         const result = await chatModel.invoke(prompt);
         console.log(result);
 
