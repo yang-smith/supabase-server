@@ -8,10 +8,17 @@
 import { SupabaseVectorStore } from 'langchain/vectorstores/supabase';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { createClient } from '@supabase/supabase-js'
+import Cors from 'nextjs-cors';
+
 export default async function handler(
   req,
   res
 ) {
+  await Cors(req, res, {
+    methods: ['GET', 'POST', 'HEAD', 'OPTIONS'], 
+    origin: '*', 
+    optionsSuccessStatus: 200, 
+  });
   if (req.method === 'POST') {
     try {
       // 解析请求体中的参数
