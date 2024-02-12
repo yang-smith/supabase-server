@@ -31,19 +31,17 @@ export default async function handler(
             const embeddings = new OpenAIEmbeddings();
             const texts = bookmarks.map(bookmark => `${bookmark.title}`+`\n${bookmark.description}`);
             // const texts = bookmarks.map(bookmark => `${bookmark.title}`);
-            const metadata = bookmarks.map(bookmark => ({ url: bookmark.url, user_id: bookmarks.user_id}));
-            console.log(metadata);
-            // const vectorStore = await SupabaseVectorStore.fromTexts(
-            //     texts,
-            //     metadata,
-            //     embeddings,
-            //     {
-            //         client,
-            //         tableName: 'documents',
-            //         queryName: 'match_documents',
-            //     }
-            // );
-            const vectorStore = null;
+            const metadata = bookmarks.map(bookmark => ({ url: bookmark.url, user_id: bookmark.user_id}));
+            const vectorStore = await SupabaseVectorStore.fromTexts(
+                texts,
+                metadata,
+                embeddings,
+                {
+                    client,
+                    tableName: 'documents',
+                    queryName: 'match_documents',
+                }
+            );
             res.status(200).json({ message: 'Bookmarks added successfully', vectorStore });
         } catch (error) {
             res.status(500).json({ error });
