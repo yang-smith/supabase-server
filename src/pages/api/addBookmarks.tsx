@@ -32,17 +32,18 @@ export default async function handler(
             const texts = bookmarks.map(bookmark => `${bookmark.title}`+`\n${bookmark.description}`);
             // const texts = bookmarks.map(bookmark => `${bookmark.title}`);
             const metadata = bookmarks.map(bookmark => ({ url: bookmark.url, user_id: bookmarks.user_id}));
-            const vectorStore = await SupabaseVectorStore.fromTexts(
-                texts,
-                metadata,
-                embeddings,
-                {
-                    client,
-                    tableName: 'documents',
-                    queryName: 'match_documents',
-                }
-            );
-
+            console.log(metadata);
+            // const vectorStore = await SupabaseVectorStore.fromTexts(
+            //     texts,
+            //     metadata,
+            //     embeddings,
+            //     {
+            //         client,
+            //         tableName: 'documents',
+            //         queryName: 'match_documents',
+            //     }
+            // );
+            const vectorStore = null;
             res.status(200).json({ message: 'Bookmarks added successfully', vectorStore });
         } catch (error) {
             res.status(500).json({ error });
