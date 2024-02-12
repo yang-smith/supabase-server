@@ -31,7 +31,7 @@ export default async function handler(
             const embeddings = new OpenAIEmbeddings();
             const texts = bookmarks.map(bookmark => `${bookmark.title}`+`\n${bookmark.description}`);
             // const texts = bookmarks.map(bookmark => `${bookmark.title}`);
-            const metadata = bookmarks.map(bookmark => ({ url: bookmark.url, user: bookmarks.user }));
+            const metadata = bookmarks.map(bookmark => ({ url: bookmark.url, user_id: bookmarks.user_id}));
             const vectorStore = await SupabaseVectorStore.fromTexts(
                 texts,
                 metadata,
