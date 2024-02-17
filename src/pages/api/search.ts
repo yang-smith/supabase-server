@@ -36,7 +36,7 @@ export default async function handler(
       });
 
       const result = await vectorStore.similaritySearch(query, topK, { user_id: userId });
-      // console.log(result);
+      console.log(result);
 
     //   const response = await fetch('http://localhost:3000/api/ai', {
     //     method: 'POST',

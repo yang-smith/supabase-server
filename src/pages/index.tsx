@@ -2,6 +2,7 @@ import { useState } from 'react';
 import OpenAI from "openai";
 import { ChatOpenAI } from "@langchain/openai";
 import chat from '@/lib/openai';
+import { Prompt } from '@/lib/prompt';
 
 // const openai = new OpenAI({
 //     apiKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -18,7 +19,8 @@ export default function Home() {
     setResponseText('');
 
     const model = 'gpt-3.5-turbo';
-    const messages = [{ role: 'user', content: inputText }];
+    const prompt = Prompt("我想看些有趣的视频", inputText);
+    const messages = [{ role: 'user', content: prompt }];
     const temperature = 0.1;
     const res = await chat(model, messages, temperature);
     if (res.ok) {
