@@ -3,6 +3,8 @@ import {
     ReconnectInterval,
     createParser,
   } from 'eventsource-parser';
+  import { OpenAIStream, StreamingTextResponse } from 'ai';
+
 
 export default async function handler(
     req,
@@ -30,38 +32,41 @@ export default async function handler(
                     stream: true,
                 }),
             });
-            const encoder = new TextEncoder();
-            const decoder = new TextDecoder();
-            const stream = new ReadableStream({
-                async start(controller) {
-                    const onParse = (event: ParsedEvent | ReconnectInterval) => {
-                        if (event.type === 'event') {
-                            const data = event.data;
+              // Convert the response into a friendly text-stream
+                const stream = OpenAIStream(res);
+                // Respond with the stream
+                return new StreamingTextResponse(stream);
+            // const encoder = new TextEncoder();
+            // const decoder = new TextDecoder();
+            // const stream = new ReadableStream({
+            //     async start(controller) {
+            //         const onParse = (event: ParsedEvent | ReconnectInterval) => {
+            //             if (event.type === 'event') {
+            //                 const data = event.data;
+            //                 try {
+            //                     const json = JSON.parse(data);
+            //                     if (json.choices[0].finish_reason != null) {
+            //                         controller.close();
+            //                         return;
+            //                     }
+            //                     const text = json.choices[0].delta.content;
+            //                     const queue = encoder.encode(text);
+            //                     controller.enqueue(queue);
+            //                 } catch (e) {
+            //                     controller.error(e);
+            //                 }
+            //             }
+            //         };
     
-                            try {
-                                const json = JSON.parse(data);
-                                if (json.choices[0].finish_reason != null) {
-                                    controller.close();
-                                    return;
-                                }
-                                const text = json.choices[0].delta.content;
-                                const queue = encoder.encode(text);
-                                controller.enqueue(queue);
-                            } catch (e) {
-                                controller.error(e);
-                            }
-                        }
-                    };
+            //         const parser = createParser(onParse);
     
-                    const parser = createParser(onParse);
+            //         for await (const chunk of res.body as any) {
+            //             parser.feed(decoder.decode(chunk));
+            //         }
+            //     },
+            // });
     
-                    for await (const chunk of res.body as any) {
-                        parser.feed(decoder.decode(chunk));
-                    }
-                },
-            });
-    
-            return new Response(stream);
+            // return new Response(stream);
         } catch(error){
             res.status(500).json({ error});
         }
