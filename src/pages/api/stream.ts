@@ -11,8 +11,8 @@ export default async function handler(
     if (req.method === 'POST') {
         try{
             const { model, messages, temperature } = req.body;
-            let url = `${process.env.NEXT_PUBLIC_OPENAI_BASE_URL}/chat/completions`;
-            const key = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+            let url = `${process.env.OPENAI_BASE_URL}/chat/completions`;
+            const key = process.env.OPENAI_API_KEY
             if(url==null || key == null){
                 console.log(`NO OPENAI_BASE_URL or OPENAI_API_KEY`);
             }
