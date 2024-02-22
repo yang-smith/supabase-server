@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.1",
+    "eventsource-parser": "^1.1.2",
     "langchain": "^0.0.211",
     "next": "14.0.4",
     "nextjs-cors": "^2.2.0",
