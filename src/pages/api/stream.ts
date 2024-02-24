@@ -3,7 +3,10 @@ import {
     ReconnectInterval,
     createParser,
 } from 'eventsource-parser';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
+import { SupabaseVectorStore } from 'langchain/vectorstores/supabase';
+import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
+import { createClient } from '@supabase/supabase-js'
+// import { OpenAIStream, StreamingTextResponse } from 'ai';
 export const config = {
     runtime: 'edge',
 };
@@ -15,9 +18,10 @@ export default async function handler(
     if (req.method === 'POST') {
         try {
             let body = await req.json();
-            const { model, messages, temperature } = body;
-            console.log(body);
-            // console.log(messages);
+            const { model, messages, temperature, userId } = body;
+            const query = messages[1].content;
+            // console.log(query);
+            
             let url = `${process.env.OPENAI_BASE_URL}chat/completions`;
             // let url = `https://ai-yyds.com/v1/chat/completions`;
             const key = process.env.OPENAI_API_KEY
@@ -77,7 +81,7 @@ export default async function handler(
 
             return new Response(stream);
         } catch (error) {
-            res.status(500).json({ error });
+            return new Response(JSON.stringify({ error: error }), { status: 500 })
         }
     } else {
         // 处理非POST请求
