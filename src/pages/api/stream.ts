@@ -3,9 +3,6 @@ import {
     ReconnectInterval,
     createParser,
 } from 'eventsource-parser';
-import { SupabaseVectorStore } from 'langchain/vectorstores/supabase';
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
-import { createClient } from '@supabase/supabase-js'
 // import { OpenAIStream, StreamingTextResponse } from 'ai';
 export const config = {
     runtime: 'edge',
