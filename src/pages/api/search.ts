@@ -34,8 +34,9 @@ export default async function handler(
         client,
         tableName: 'documents',
       });
+      console.log(query,topK,userId);
       const result = await vectorStore.similaritySearch(query, topK, { user_id: userId });
-
+      console.log(result);
       res.status(200).json(result);
     } catch (error) {
       res.status(500).json({ error});
