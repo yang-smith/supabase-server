@@ -38,8 +38,8 @@ export default async function handler(
                 embeddings,
                 {
                     client,
-                    tableName: 'documents',
-                    queryName: 'match_documents',
+                    tableName: 'bookmarks',
+                    queryName: 'match_bookmarks',
                 }
             );
             res.status(200).json({ message: 'Bookmarks added successfully', vectorStore });
