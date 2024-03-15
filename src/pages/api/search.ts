@@ -32,7 +32,7 @@ export default async function handler(
       const embeddings = new OpenAIEmbeddings();
       const vectorStore = new SupabaseVectorStore(embeddings, {
         client,
-        tableName: 'bookmarks',
+        tableName: 'documents',
       });
       console.log(query,topK,userId);
       const result = await vectorStore.similaritySearch(query, topK, { user_id: userId });
