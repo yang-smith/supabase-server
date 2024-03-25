@@ -36,8 +36,8 @@ export default async function handler(
       const retriever = new SupabaseHybridSearch(embeddings, {
         client,
         //  Below are the defaults, expecting that you set up your supabase table and functions according to the guide above. Please change if necessary.
-        similarityK: 8,
-        keywordK: 8,
+        similarityK: 10,
+        keywordK: 10,
         tableName: "bookmarks",
         similarityQueryName: "match_bookmarks",
         keywordQueryName: "kw_match_bookmarks",
