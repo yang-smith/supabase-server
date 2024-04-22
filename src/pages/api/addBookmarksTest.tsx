@@ -2,16 +2,17 @@ import { SupabaseVectorStore } from 'langchain/vectorstores/supabase';
 import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
 import { createClient } from '@supabase/supabase-js'
 import fs from 'fs';
-
+import Cors from 'nextjs-cors';
 
 export default async function handler(
     req,
     res
 ) {
-    res.setHeader('Access-Control-Allow-Origin', 'chrome-extension://mkfmekmffkdlbghfjhojpcdpccfneahc');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
+    await Cors(req, res, {
+        methods: ['GET', 'POST', 'HEAD', 'OPTIONS'], 
+        origin: '*', 
+        optionsSuccessStatus: 200, 
+      });
     // Handle preflight requests for CORS
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
