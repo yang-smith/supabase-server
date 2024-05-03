@@ -20,9 +20,7 @@ export default async function handler(
             // console.log(query);
             
             let url = `${process.env.OPENAI_BASE_URL}chat/completions`;
-            // let url = `https://ai-yyds.com/v1/chat/completions`;
             const key = process.env.OPENAI_API_KEY
-            // const key = 'sk-JGZVAOI7Z4bt5zo8Ff23F09405Cd4b2386B177A42fB48a21'
             if (url == null || key == null) {
                 console.log(`NO OPENAI_BASE_URL or OPENAI_API_KEY`);
             }
