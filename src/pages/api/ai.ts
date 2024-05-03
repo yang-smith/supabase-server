@@ -1,10 +1,16 @@
 import {Prompt} from"@/lib/prompt";
 import chat from '@/lib/openai';
+import Cors from 'nextjs-cors';
 
 export default async function handler(
     req,
     res
 ) {
+  await Cors(req, res, {
+    methods: ['GET', 'POST', 'HEAD', 'OPTIONS'], 
+    origin: '*', 
+    optionsSuccessStatus: 200, 
+  });
     if (req.method === 'POST') {
       let body = await req.json();
       const { model, messages, temperature } = body;
