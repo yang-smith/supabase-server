@@ -34,10 +34,9 @@ export default async function handler(
               temperature: temperature ? temperature : 0.1,
           }),
       });
-      console.log(result);
         if (result.ok) {
           const data = await result.json();
-          console.log(data.choices[0].message.content);
+          console.log(data);
           res.status(200).json(data.choices[0].message.content);
         } else {
           console.log(result.status);
