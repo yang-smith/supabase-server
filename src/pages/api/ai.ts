@@ -15,7 +15,6 @@ export default async function handler(
       const { model, messages, temperature } = req.body;
       const query = messages[1].content;
       // console.log(query);
-      
       let url = `${process.env.OPENAI_BASE_URL}chat/completions`;
       const key = process.env.OPENROUTER_API_KEY
       if (url == null || key == null) {
@@ -28,7 +27,7 @@ export default async function handler(
           },
           method: 'POST',
           body: JSON.stringify({
-              model: 'auto',
+              model: 'mistralai/mistral-7b-instruct:free',
               messages: messages,
               max_tokens: 1000,
               temperature: temperature ? temperature : 0.1,
@@ -36,7 +35,7 @@ export default async function handler(
       });
         if (result.ok) {
           const data = await result.json();
-          console.log(data);
+          console.log(data.choices[0].message.content);
           res.status(200).json(data.choices[0].message.content);
         } else {
           console.log(result.status);
