@@ -12,8 +12,7 @@ export default async function handler(
     optionsSuccessStatus: 200, 
   });
     if (req.method === 'POST') {
-      let body = await req.json();
-      const { model, messages, temperature } = body;
+      const { model, messages, temperature } = req.body;
       const query = messages[1].content;
       // console.log(query);
       
@@ -33,9 +32,9 @@ export default async function handler(
               messages: messages,
               max_tokens: 1000,
               temperature: temperature ? temperature : 0.1,
-              stream: false,
           }),
       });
+      console.log(result);
         if (result.ok) {
           const data = await result.json();
           console.log(data.choices[0].message.content);
