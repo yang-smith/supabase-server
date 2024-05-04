@@ -20,7 +20,7 @@ export default async function handler(
       if (url == null || key == null) {
           console.log(`NO OPENAI_BASE_URL or OPENAI_API_KEY`);
       }
-      const result = await fetch("url", {
+      const result = await fetch(url, {
           headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${key}`,
