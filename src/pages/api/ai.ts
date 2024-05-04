@@ -16,18 +16,18 @@ export default async function handler(
       const query = messages[1].content;
       // console.log(query);
       let url = `${process.env.OPENAI_BASE_URL}chat/completions`;
-      const key = process.env.OPENROUTER_API_KEY
+      const key = process.env.OPENAI_API_KEY
       if (url == null || key == null) {
           console.log(`NO OPENAI_BASE_URL or OPENAI_API_KEY`);
       }
-      const result = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const result = await fetch("url", {
           headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${key}`,
           },
           method: 'POST',
           body: JSON.stringify({
-              model: 'mistralai/mistral-7b-instruct:free',
+              model: model,
               messages: messages,
               max_tokens: 1000,
               temperature: temperature ? temperature : 0.1,
