@@ -12,8 +12,8 @@ export default async function handler(
     optionsSuccessStatus: 200, 
   });
     if (req.method === 'POST') {
-      const { model, messages, temperature } = req.body;
-      const query = messages[1].content;
+      const { model, messages, temperature, bookmark } = req.body;
+      // const query = messages[1].content;
       // console.log(query);
       let url = `${process.env.OPENAI_BASE_URL}chat/completions`;
       const key = process.env.OPENAI_API_KEY
@@ -35,7 +35,18 @@ export default async function handler(
       });
         if (result.ok) {
           const data = await result.json();
-          console.log(data.choices[0].message.content);
+          const content = data.choices[0].message.content;
+          // console.log(content);
+          bookmark.description = content.replace(/^Summary: /, '');
+          console.log(bookmark.description);
+          fetch('https://api.bookmarkbot.fun/api/addBookmarksTest', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ bookmarks:[bookmark] })
+        });
+
           res.status(200).json(data.choices[0].message.content);
         } else {
           console.log(result.status);
