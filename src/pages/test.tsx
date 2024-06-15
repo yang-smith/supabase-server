@@ -6,23 +6,16 @@ const Test: React.FC = () => {
     const [responseContent, setResponseContent] = useState<string>(''); // 明确responseContent是字符串类型
 
     const fetchContent = async () => {
-        if (!url.trim()) {
-            setResponseContent('Please enter a valid URL.');
-            return;
-        }
-    
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            const response = await fetch(`/api/proxy?url=${encodeURIComponent(url)}`);
             const text = await response.text();
             setResponseContent(text);
         } catch (error) {
-            console.error('Fetching error:', error);
-            setResponseContent(`Error fetching the URL: ${error}`);
+            console.error('Error fetching through proxy:', error);
+            setResponseContent('Error fetching the URL');
         }
     };
+    
     
 
     const handleUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
